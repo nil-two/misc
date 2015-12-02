@@ -1,0 +1,163 @@
+#!/bin/sh
+set -eu
+version='0.3.0'
+
+usage() {
+  cat <<__USAGE__ >&2
+Usage: vub [OPTION]... URI...
+Install Vim plugin to under the management of vim-unbundle.
+
+URI:
+  sunaku/vim-unbundle                    # short URI
+  https://github.com/sunaku/vim-unbundle # full URI
+
+Options:
+  -f, --filetype=TYPE       installing under the ftbundle/TYPE
+  -l, --list                change the behavior to list packages
+  -r, --remove              change the behavior to remove
+  -u, --update              change the behavior to update
+      --help                show this help message
+      --version             output version information
+__USAGE__
+}
+
+version() {
+  echo "$version" >&2
+}
+
+to_source_uri() {
+  local uri="$1"
+  case "$uri" in
+    github.com/*/*|bitbucket.org/*/*)
+      echo "https://$uri"
+      ;;
+    */*)
+      echo "https://github.com/$uri"
+      ;;
+    *)
+      echo "$uri"
+      ;;
+  esac
+}
+
+to_destination_path() {
+  local filetype="$1"
+  local uri="${2##*/}"
+  if [ -z "$filetype" ]; then
+    echo "$HOME/.vim/bundle/$uri"
+  else
+    echo "$HOME/.vim/ftbundle/$filetype/$uri"
+  fi
+}
+
+mode=install
+filetype=
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --help)
+      usage
+      exit 0
+      ;;
+    --version)
+      version
+      exit 0
+      ;;
+    -f|--filetype)
+      if [ "$#" -lt 2 ]; then
+        echo "${0##*/}: option requires an argument -- '${1##*-}'" >&2
+        exit 2
+      fi
+      filetype="$2"
+      ;;
+    -f*)
+      filetype="${1#-f}"
+      ;;
+    --filetype=*)
+      filetype="${1#--filetype=}"
+      ;;
+    -l|--list)
+      mode=list
+      ;;
+    -l*)
+      mode=list
+      next="-${1#-l}"
+      shift
+      set -- "$next" "$@"
+      continue
+      ;;
+    -r|--remove)
+      mode=remove
+      ;;
+    -r*)
+      mode=remove
+      next="-${1#-r}"
+      shift
+      set -- "$next" "$@"
+      continue
+      ;;
+    -u|--update)
+      mode=update
+      ;;
+    -u*)
+      mode=update
+      next="-${1#-u}"
+      shift
+      set -- "$next" "$@"
+      continue
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "${0##*/}: unrecognized option '$1'" >&2
+      exit 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
+case "$mode" in
+  list)
+    root=''
+    if [ -z "$filetype" ]; then
+      root="$HOME/.vim/bundle"
+    else
+      root="$HOME/.vim/ftbundle/$filetype"
+    fi
+    ls -- "$root" 2> /dev/null
+    exit 0
+    ;;
+esac
+
+if [ "$#" -lt 1 ]; then
+  usage
+  exit 2
+fi
+for uri in "$@"; do
+  source_uri="$(to_source_uri "$uri")"
+  destination_path="$(to_destination_path "$filetype" "$uri")"
+  case "$mode" in
+    install)
+      if [ ! -d "$destination_path" ]; then
+        git clone -- "$source_uri" "$destination_path"
+      fi
+      ;;
+    remove)
+      if [ -d "$destination_path" ]; then
+        rm -rf -- "$destination_path"
+      fi
+      ;;
+    update)
+      if [ ! -d "$destination_path" ]; then
+        git clone -- "$source_uri" "$destination_path"
+      else
+        (cd "$destination_path"; git pull)
+      fi
+      ;;
+  esac
+done
+exit 0
