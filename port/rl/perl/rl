@@ -1,0 +1,68 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use Getopt::Long qw(:config posix_default no_ignore_case bundling);
+use Pod::Usage qw(pod2usage);
+
+binmode STDIN,  ":utf8";
+binmode STDOUT, ":utf8";
+binmode STDERR, ":utf8";
+
+our $VERSION = '0.2.0';
+
+my $raw_delimiter = '';
+Getopt::Long::GetOptions(
+  'delimiter|d=s' => \$raw_delimiter,
+  'help'          => sub {
+    pod2usage(0);
+  },
+  'version'       => sub {
+    print "$VERSION\n";
+    exit(2);
+  }
+) or exit(2);
+
+my $delimiter = quotemeta $raw_delimiter;
+
+while (my $line = <<>>) {
+  chomp $line;
+  $line = join $raw_delimiter, reverse split /$delimiter/o, $line;
+  print "$line\n";
+}
+
+=head1 NAME
+
+rl - reverse lines.
+
+=head1 SYNOPSIS
+
+rl [OPTION]... [FILE]...
+
+=head1 DESCRIPTION
+
+The command reverse lines of FILE(s), or standard input.
+
+=head1 OPTIONS
+
+=head2 --delimiter=I<string>
+
+delimit lines by I<string>.
+
+=head2 --help
+
+display help text and exit
+
+=head2 --version
+
+output version information and exit
+
+=head1 AUTHOR
+
+kusabashira
+
+=head1 LICENSE
+
+MIT
+
+=cut
