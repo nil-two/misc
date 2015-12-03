@@ -31,6 +31,8 @@ while (my $line = <<>>) {
   print "$line\n";
 }
 
+__END__
+
 =head1 NAME
 
 rl - reverse lines.
@@ -64,5 +66,3 @@ kusabashira
 =head1 LICENSE
 
 MIT
-
-=cut
