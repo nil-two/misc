@@ -5,7 +5,7 @@ use utf8;
 use Getopt::Long qw(:config posix_default no_ignore_case bundling);
 use Pod::Usage qw(pod2usage);
 
-binmode STDIN,  ":utf8";
+binmode STDIN, ":utf8";
 binmode STDOUT, ":utf8";
 binmode STDERR, ":utf8";
 
@@ -14,10 +14,10 @@ our $VERSION = '0.2.0';
 my $raw_delimiter = '';
 Getopt::Long::GetOptions(
   'delimiter|d=s' => \$raw_delimiter,
-  'help'          => sub {
+  'help' => sub {
     pod2usage(0);
   },
-  'version'       => sub {
+  'version' => sub {
     print "$VERSION\n";
     exit(2);
   }
