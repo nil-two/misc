@@ -49,7 +49,7 @@ The command reverse lines of FILE(s), or standard input.
 
 =head2 --delimiter=I<string>
 
-delimit lines by I<string>.
+delimit lines by I<string>
 
 =head2 --help
 
