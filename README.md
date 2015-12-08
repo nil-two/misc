@@ -8,7 +8,7 @@ Contents
 
 ### aoj
 
-Programs to solve the problem of AOJ
+Programs to solve the problems of AOJ.
 
 ### port
 
