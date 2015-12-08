@@ -18,7 +18,7 @@ Getopt::Long::GetOptions(
     pod2usage(0);
   },
   'version' => sub {
-    print "$VERSION\n";
+    print STDERR "$VERSION\n";
     exit(2);
   }
 ) or exit(2);
