@@ -19,7 +19,7 @@ Getopt::Long::GetOptions(
   },
   'version' => sub {
     print STDERR "$VERSION\n";
-    exit(2);
+    exit(0);
   }
 ) or exit(2);
 
