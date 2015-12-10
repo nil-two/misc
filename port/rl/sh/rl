@@ -1,0 +1,64 @@
+#!/bin/sh
+set -eu
+version='0.2.0'
+
+usage() {
+  cat <<__USAGE__
+Usage: ${0##*/} [OPTION]... [FILE]...
+Reverse lines of FILE(s), or standard input.
+
+Options:
+  -d, --delimiter=DELIM    delimit lines by DELIM
+      --help               display this help text and exit
+      --version            output version information and exit
+__USAGE__
+}
+
+version() {
+  echo "$version"
+}
+
+delimiter=
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    -d|--delimiter)
+      if [ "$#" -lt 2 ]; then
+        echo "${0##*/}: option requires an argument -- '$1'" >&2
+        exit 2
+      fi
+      delimiter="$2"
+      shift
+      ;;
+    -d*)
+      delimiter="${1#-d}"
+      ;;
+    --help)
+      usage >&2
+      exit 0
+      ;;
+    --version)
+      version >&2
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "${0##*/}: unrecognized option '$1'" >&2
+      exit 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
+awk -v "delimiter=$delimiter" '{
+  len = split($0, src, delimiter);
+  dst = src[len];
+  for (i = 1; i < len; i++)
+    dst = dst delimiter src[len-i];
+  print dst;
+}' "$@"
