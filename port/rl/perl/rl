@@ -47,7 +47,7 @@ The command reverse lines of FILE(s), or standard input.
 
 =head1 OPTIONS
 
-=head2 --delimiter=I<string>
+=head2 -d, --delimiter=I<string>
 
 delimit lines by I<string>
 
