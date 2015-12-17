@@ -1,13 +1,13 @@
 #include <math.h>
 #include <stdio.h>
 
-double absDouble(double x) {
-	return (x < 0)? -x: x;
+double abs_double(double n) {
+	return (n < 0)? -n: n;
 }
 
 double distance(double x1, double y1, double x2, double y2) {
-	double h = absDouble(y2 - y1);
-	double w = absDouble(x2 - x1);
+	double h = abs_double(y2 - y1);
+	double w = abs_double(x2 - x1);
 	return sqrt(pow(h, 2.0) + pow(w, 2.0));
 }
 

@@ -11,9 +11,9 @@ int main() {
 	rad = deg * PI / 180.0;
 	c = sqrt(pow(a, 2) + pow(b, 2) - 2*a*b*cos(rad));
 
-	area      = a*b*sin(rad) / 2.0;
+	area = a*b*sin(rad) / 2.0;
 	perimeter = a + b + c;
-	h         = 2*area / a;
+	h = 2*area / a;
 	printf("%f\n", area);
 	printf("%f\n", perimeter);
 	printf("%f\n", h);

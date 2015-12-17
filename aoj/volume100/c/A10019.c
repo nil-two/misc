@@ -6,10 +6,10 @@ enum {
 	N = 1000,
 };
 
-int sumOfNumbers(char *digits, size_t noDigits) {
+int sum_of_digits(char *digits) {
 	int i;
 	int sum = 0;
-	for (i = 0; i < noDigits; i++)
+	for (i = 0; digits[i] != '\0'; i++)
 		if (isdigit(digits[i]))
 			sum += digits[i] - '0';
 	return sum;
@@ -22,7 +22,7 @@ int main() {
 		if (strcmp(digits, "0") == 0)
 			break;
 
-		printf("%d\n", sumOfNumbers(digits, strlen(digits)));
+		printf("%d\n", sum_of_digits(digits));
 	}
 	return 0;
 }

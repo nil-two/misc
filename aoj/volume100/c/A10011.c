@@ -1,39 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void reverse(int *a, int noItem) {
+void reverse(int *a, int len) {
 	int i, tmp;
-	if (noItem < 1)
+	if (len < 1)
 		return;
 
-	for (i = 0; i < noItem / 2; i++) {
+	for (i = 0; i < len / 2; i++) {
 		tmp  = a[i];
-		a[i] = a[noItem-1 - i];
-		a[noItem-1 - i] = tmp;
+		a[i] = a[len-1 - i];
+		a[len-1 - i] = tmp;
 	}
 }
 
-void dump(int *a, int noItem) {
+void dump(int *a, int len) {
 	int i;
-	for (i = 0; i < noItem; i++) {
+	for (i = 0; i < len; i++) {
 		if (i != 0)
-			printf(" ");
+			putchar(' ');
 		printf("%d", a[i]);
 	}
-	puts("");
+	putchar('\n');
 }
 
 int main() {
-	int i, noItem;
+	int i, len;
 	int *a;
-
-	scanf("%d", &noItem);
-	a = (int *)malloc(noItem * sizeof(int));
-	for (i = 0; i < noItem; i++)
+	scanf("%d", &len);
+	a = (int *)malloc(len * sizeof(int));
+	for (i = 0; i < len; i++)
 		scanf("%d", &a[i]);
-	reverse(a, noItem);
 
-	dump(a, noItem);
-	free(a);
+	reverse(a, len);
+
+	dump(a, len);
 	return 0;
 }

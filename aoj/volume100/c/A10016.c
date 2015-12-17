@@ -12,7 +12,7 @@ char grade(int m, int f, int r) {
 
 int main() {
 	int m, f, r;
-	for(;;) {
+	for (;;) {
 		scanf("%d %d %d", &m, &f, &r);
 		if (m == -1 && f == -1 && r == -1)
 			break;

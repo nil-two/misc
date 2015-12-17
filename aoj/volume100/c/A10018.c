@@ -6,7 +6,7 @@ enum {
 	N = 1200,
 };
 
-void swapcase(char *s) {
+void to_swapcase(char *s) {
 	int i;
 	for (i = 0; s[i] != '\0'; i++) {
 		if (islower(s[i]))
@@ -18,11 +18,10 @@ void swapcase(char *s) {
 
 int main() {
 	char text[N+1];
-
 	fgets(text, sizeof(text), stdin);
-	text[strlen(text) - 1] = '\0';
-	swapcase(text);
 
-	puts(text);
+	to_swapcase(text);
+
+	printf("%s", text);
 	return 0;
 }

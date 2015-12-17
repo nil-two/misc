@@ -3,26 +3,26 @@
 #include <string.h>
 
 enum {
-	MAX_WORD = 20,
+	MAX_WORD_LEN = 20,
 };
 
-int cmpStr(const void *a, const void *b) {
+int cmp_str(const void *a, const void *b) {
 	return strcmp(*(char **)a, *(char **)b);
 }
 
 int main() {
 	int i;
-	int noWords;
+	int no_words;
 	char **words;
 
-	scanf("%d", &noWords);
-	words = (char **)malloc(noWords * sizeof(char **));
-	for (i = 0; i < noWords; i++) {
-		words[i] = (char *)malloc(MAX_WORD * sizeof(char));
+	scanf("%d", &no_words);
+	words = (char **)malloc(no_words * sizeof(char *));
+	for (i = 0; i < no_words; i++) {
+		words[i] = (char *)malloc(MAX_WORD_LEN * sizeof(char));
 		scanf("%s", words[i]);
 	}
 
-	qsort((void *)words, noWords, sizeof(char **), cmpStr);
+	qsort((void *)words, no_words, sizeof(char **), cmp_str);
 
 	puts(words[0]);
 	return 0;

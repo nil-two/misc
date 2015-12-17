@@ -8,21 +8,21 @@ enum {
 typedef struct Player Player;
 struct Player {
 	int score;
-	char words[MAX_WORDS+1];
+	char word[MAX_WORDS+1];
 };
 
 int main() {
 	int i;
 	int result;
-	int noGame;
+	int no_games;
 	Player a = {0};
 	Player b = {0};
 
-	scanf("%d", &noGame);
-	for (i = 0; i < noGame; i++) {
-		scanf("%s", a.words);
-		scanf("%s", b.words);
-		result = strcmp(a.words, b.words);
+	scanf("%d", &no_games);
+	for (i = 0; i < no_games; i++) {
+		scanf("%s", a.word);
+		scanf("%s", b.word);
+		result = strcmp(a.word, b.word);
 		if (result == 0) {
 			a.score += 1;
 			b.score += 1;

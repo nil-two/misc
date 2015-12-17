@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cmpInt(const void *a, const void *b) {
+int cmp_int(const void *a, const void *b) {
 	if (*(int *)a > *(int *)b)
 		return 1;
 	if (*(int *)a < *(int *)b)
@@ -11,33 +11,33 @@ int cmpInt(const void *a, const void *b) {
 
 typedef struct Items Items;
 struct Items {
-	int noItem;
-	int *ls;
+	int no_items;
+	int *items;
 };
 
-void readItems(Items *s) {
+void read_items(Items *items) {
 	int i;
-	scanf("%d", &s->noItem);
-	s->ls = (int *)malloc(s->noItem * sizeof(int));
-	for (i = 0; i < s->noItem; i++)
-		scanf("%d", &s->ls[i]);
-	qsort((void *)s->ls, s->noItem, sizeof(int), cmpInt);
+	scanf("%d", &items->no_items);
+	items->items = (int *)malloc(items->no_items * sizeof(int));
+	for (i = 0; i < items->no_items; i++)
+		scanf("%d", &items->items[i]);
+	qsort((void *)items->items, items->no_items, sizeof(int), cmp_int);
 }
 
-int countIntersection(Items *a, Items *b) {
+int count_intersection(Items *a, Items *b) {
 	int i;
-	int cnt = 0;
-	for (i = 0; i < b->noItem; i++)
-		if (bsearch(&b->ls[i], a->ls, a->noItem, sizeof(int), cmpInt) != NULL)
-			cnt++;
-	return cnt;
+	int count = 0;
+	for (i = 0; i < b->no_items; i++)
+		if (bsearch(&b->items[i], a->items, a->no_items, sizeof(int), cmp_int) != NULL)
+			count++;
+	return count;
 }
 
 int main() {
 	Items s, t;
-	readItems(&s);
-	readItems(&t);
+	read_items(&s);
+	read_items(&t);
 
-	printf("%d\n", countIntersection(&s, &t));
+	printf("%d\n", count_intersection(&s, &t));
 	return 0;
 }

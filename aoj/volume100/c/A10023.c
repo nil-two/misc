@@ -5,30 +5,29 @@ enum {
 	MAX_CARDS = 200,
 };
 
-void shuffle(char *cards, int noCards, int height) {
+void shuffle(char *cards, int no_cards, int height) {
 	char temp[MAX_CARDS+1];
-	int border = noCards-height;
-	memcpy(temp, cards+height, border);
-	memcpy(temp+border, cards, height);
-	memcpy(cards, temp, noCards);
+	int border = no_cards - height;
+	memcpy(temp, cards + height, border);
+	memcpy(temp + border, cards, height);
+	memcpy(cards, temp, no_cards);
 }
 
 int main() {
-	int si, hi;
 	char cards[MAX_CARDS+1];
-	int noCards;
-	int noShuffle;
-	int h;
+	int no_cards;
+	int no_shuffle_times;
+	int i, h;
 	for (;;) {
 		scanf("%s", cards);
 		if (strcmp(cards, "-") == 0)
 			break;
 
-		noCards = strlen(cards);
-		scanf("%d", &noShuffle);
-		for (si = 0; si < noShuffle; si++) {
+		no_cards = strlen(cards);
+		scanf("%d", &no_shuffle_times);
+		for (i = 0; i < no_shuffle_times; i++) {
 			scanf("%d", &h);
-			shuffle(cards, noCards, h);
+			shuffle(cards, no_cards, h);
 		}
 
 		puts(cards);

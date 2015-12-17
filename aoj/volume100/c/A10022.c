@@ -7,7 +7,7 @@ enum {
 	MAX_T = 1000,
 };
 
-void lowercase(char *s) {
+void to_lowercase(char *s) {
 	int i;
 	for (i = 0; s[i] != '\0'; i++)
 		s[i] = tolower(s[i]);
@@ -15,24 +15,24 @@ void lowercase(char *s) {
 
 int main() {
 	int i;
-	int cnt;
+	int count;
 	char w[MAX_W+1];
 	char t[MAX_T+1];
 
 	scanf("%s", w);
-	lowercase(w);
+	to_lowercase(w);
 
-	cnt = 0;
+	count = 0;
 	for (;;) {
 		scanf("%s", t);
 		if (strcmp(t, "END_OF_TEXT") == 0)
 			break;
 
-		lowercase(t);
+		to_lowercase(t);
 		if (strcmp(w, t) == 0)
-			cnt++;
+			count++;
 	}
-	printf("%d\n", cnt);
+	printf("%d\n", count);
 
 	return 0;
 }

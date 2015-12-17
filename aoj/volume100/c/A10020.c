@@ -3,10 +3,10 @@
 
 enum {
 	N = 1200,
-	NO_ALPHABET = 26,
+	NO_ALPHABETS = 26,
 };
 
-void lowercase(char *s) {
+void to_lowercase(char *s) {
 	int i;
 	for (i = 0; s[i] != '\0'; i++)
 		s[i] = tolower(s[i]);
@@ -15,19 +15,18 @@ void lowercase(char *s) {
 
 int main() {
 	int i;
-	char ch;
 	char text[N+1];
-	int cnt[NO_ALPHABET] = {0};
+	int counts[NO_ALPHABETS] = {0};
 
 	while (fgets(text, sizeof(text), stdin) != NULL) {
-		lowercase(text);
+		to_lowercase(text);
 		for (i = 0; i < N && text[i] != '\0'; i++) {
 			if (isalpha(text[i]))
-				cnt[text[i]-'a']++;
+				counts[text[i]-'a']++;
 		}
 	}
 
-	for (i = 0; i < NO_ALPHABET; i++)
-		printf("%c : %d\n", 'a'+i, cnt[i]);
+	for (i = 0; i < NO_ALPHABETS; i++)
+		printf("%c : %d\n", 'a'+i, counts[i]);
 	return 0;
 }
