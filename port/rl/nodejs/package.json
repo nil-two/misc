@@ -1,0 +1,17 @@
+{
+  "name": "rl",
+  "version": "0.2.0",
+  "description": "Reverse lines",
+  "bin": {
+    "rl": "cli.js"
+  },
+  "dependencies": {
+    "yargs": "^3.31.0",
+    "argf": "^0.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kusabashira",
+  "license": "MIT"
+}
