@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require 'optparse'
+
+option={}
+OptionParser.new do |opt|
+  opt.banner = 'Usage: rl [OPTION]... [FILE]...'
+  opt.version = '0.2.0'
+  opt.on('-d', '--delimiter=DELIM', 'delimit lines by DELIM') {|v|
+    option[:delimiter] = v
+  }
+  opt.parse!(ARGV)
+end
+
+delimiter = option[:delimiter] || ''
+$<.each_line do |line|
+  puts line.chomp.split(delimiter).reverse.join(delimiter)
+end
