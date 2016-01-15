@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+
+if (@ARGV < 1 || $ARGV[0] eq '--help') {
+  print STDERR "usage: $0 N [FILE]...\n";
+  exit 2;
+}
+my $n = $ARGV[0];
+
+shift @ARGV;
+my @src = <>;
+if ($n < 0) {
+  print @src while 1;
+} else {
+  print @src for 1 .. $n;
+}
