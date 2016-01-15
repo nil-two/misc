@@ -2,9 +2,12 @@
 use strict;
 use warnings;
 use utf8;
+use File::Basename;
+
+my $name = basename $0;
 
 if (@ARGV < 1 || $ARGV[0] eq '--help') {
-  print STDERR "usage: $0 N [FILE]...\n";
+  print STDERR "usage: $name N [FILE]...\n";
   exit 2;
 }
 my $n = $ARGV[0];
