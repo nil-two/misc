@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ $# -lt 1 ] || [ "$1" = '--help' ]; then
+  echo "usage: ${0##*/} N [FILE]..." >&2
+  exit 2;
+fi
+n="$1"
+src="$(mktemp "/tmp/${0##*/}.tmp.XXXXXX")"
+atexit() {
+	rm -f -- "$src"
+}
+trap 'atexit' EXIT
+trap 'trap - EXIT; atexit; exit -1' INT PIPE TERM
+
+shift
+cat -- "$@" > "$src"
+if [ "$n" -lt 0 ]; then
+  while true; do
+    cat -- "$src"
+  done
+else
+  for i in awk -v"n=$n" 'BEGIN{for(i=0;i<n;i++)print i}'; do
+    cat -- "$src"
+  done
+fi
