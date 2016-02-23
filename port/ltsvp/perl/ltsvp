@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use File::Basename qw(basename);
+use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat bundling);
+
+our $NAME    = basename $0;
+our $VERSION = "0.5.0";
+our $USAGE   = <<__USAGE__;
+Usage: $NAME OPTION... [FILE]...
+Print selected parts of LTSV from each FILE to standard output.
+
+Options:
+  -k, --keys=LIST
+                 select only these keys (required)
+  -D, --output-delimiter=STRING
+                 use STRING to separate parts (default: \\t)
+  -r, --remain-ltsv
+                 print selected parts as LTSV
+  -h, --help
+                 display this help text and exit
+  -v, --version
+                 output version information and exit
+
+LIST is made up of keys separated by commas.
+  host           # Select host
+  host,time,ua   # Select host, time, and ua
+__USAGE__
+
+sub to_keys {
+  my $list = shift;
+  my @keys;
+  for (split /(?<!\\),/, $list) {
+    s{(\\+)$}{"\\\\" x int(length($1)/2)}ge;
+    s{\\(.)}{$1}g;
+    push @keys, $_;
+  }
+  return @keys;
+}
+
+GetOptions(\my %opt, qw/
+  keys|k=s
+  output-delimiter|D=s
+  remain-ltsv|r
+  help|h
+  version|v
+/) or exit 2;
+
+if (exists $opt{"help"}) {
+  print STDERR "$USAGE";
+  exit 0;
+}
+if (exists $opt{"version"}) {
+  print STDERR "$VERSION\n";
+  exit 0;
+}
+
+if (!exists $opt{"keys"}) {
+  print STDERR "no specify LIST\n";
+  exit 2;
+}
+my @keys = to_keys $opt{"keys"};
+my $output_delimiter = $opt{"output-delimiter"} // "\t";
+my $remain_ltsv = exists $opt{"remain-ltsv"};
+
+while (my $record = <<>>) {
+  chomp $record;
+  my %fields = map { split /:/, $_ } split /\t/, $record;
+  my @selected_fields = map { ($remain_ltsv ? "$_:" : "") . ($fields{$_} || "") } @keys;
+  printf "%s\n", join $output_delimiter, @selected_fields;
+}
+
