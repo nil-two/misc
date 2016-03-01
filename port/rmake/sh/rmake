@@ -1,0 +1,58 @@
+#!/bin/sh
+set -eu
+version='0.1.0'
+
+usage() {
+  cat <<__USAGE__ >&2
+Usage: ${0##*/} [OPTION]... [MAKE-ARGS]...
+Find parent directory's Makefile recursively, and execute make.
+
+Options:
+      --help                display this help text and exit
+      --version             display version information and exit
+__USAGE__
+}
+
+warn() {
+  printf "%s: %s\n" "${0##*/}" "$*" >&2
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --help)
+      usage
+      exit 0
+      ;;
+    --version)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      warn "unrecognized option -- '${1##*-}'"
+      exit 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
+while : ; do
+  if [ -e Makefile ]; then
+    make "$@"
+    exit 0
+  fi
+
+  current="$(pwd)"
+  parent="$(dirname "$current")"
+  if [ "$current" = "$parent" ]; then
+    warn "Makefile Not Found"
+    exit 2
+  fi
+  cd "$parent"
+done
