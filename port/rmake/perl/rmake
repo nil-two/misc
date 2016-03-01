@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use Cwd qw(getcwd chdir);
+use File::Basename qw(basename dirname);
+
+our $NAME    = basename $0;
+our $VERSION = "0.1.0";
+our $USAGE   = <<__USAGE__;
+Usage: $NAME [OPTION]... [MAKE-ARGS]...
+Find parent directory's Makefile recursively, and execute make.
+
+Options:
+      --help                display this help text and exit
+      --version             display version information and exit
+__USAGE__
+
+if (@ARGV > 0) {
+  if ($ARGV[1] eq "--") {
+    shift @ARGV;
+  } elsif ($ARGV[1] eq "--help") {
+    print STDERR "$USAGE";
+    exit 0;
+  } elsif ($ARGV[1] eq "--version") {
+    print STDERR "$VERSION\n";
+    exit 0;
+  } elsif ($ARGV[1] =~ /^-.*/) {
+    print STDERR "$NAME: unrecognized option '$ARGV[1]'\n";
+    exit 2;
+  }
+}
+
+while (1) {
+  if (-e "Makefile") {
+    exec "make", @ARGV;
+  }
+  if (getcwd() eq dirname(getcwd())) {
+    print STDERR "$NAME: Makefile not found\n";
+    exit 2;
+  }
+  chdir(dirname(getcwd()));
+}
