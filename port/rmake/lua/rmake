@@ -1,0 +1,44 @@
+#!/usr/bin/lua
+local posix = require "posix"
+
+local name    = "rmake"
+local version = "0.1.0"
+local usage   = ([[
+Usage: %s [OPTION]... [MAKE-ARGS]...
+Find parent directory's Makefile recursively, and execute make.
+
+Options:
+      --help                display this help text and exit
+      --version             display version information and exit
+]]):format(name)
+
+if #arg > 0 then
+  local opt = arg[1]
+  if opt == "--" then
+    table.remove(arg, 1)
+  elseif opt == "--help" then
+    io.stderr:write(usage)
+    os.exit(0)
+  elseif opt == "--version" then
+    io.stderr:write(("%s\n"):format(version))
+    os.exit(0)
+  elseif opt:match("^-.*") then
+    io.stderr:write(("%s: unrecognized option '%s'\n"):format(name, opt))
+    os.exit(2)
+  end
+end
+
+while true do
+  if posix.stat("Makefile", "type") then
+    os.execute("make " .. table.concat(arg, " "))
+    os.exit(0)
+  end
+
+  local current = posix.getcwd()
+  local parent  = posix.dirname(current)
+  if current == parent then
+    io.stderr:write(("%s: Makefile not found\n"):format(name))
+    os.exit(2)
+  end
+  posix.chdir(parent)
+end
