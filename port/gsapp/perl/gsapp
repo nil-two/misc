@@ -1,0 +1,69 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+our $GSAPP_PATH = $ENV{GSAPP_PATH} // "$ENV{HOME}/.local/share/applications";
+
+package GSApp;
+use App::Cmd::Setup -app;
+our $VERSION = "0.2.0";
+
+package GSApp::Command::Add;
+use App::Cmd::Setup -command;
+use Path::Tiny qw(path);
+sub execute {
+  my (undef, undef, $args) = @_;
+  my $name = $args->[0];
+  my $execute = join " ", @$args[1 .. $#$args];
+
+  my $app = path("$GSAPP_PATH/$name.desktop");
+  die "\"$app\" has already exist" if $app->exists;
+
+  $app->spew_utf8(<<__DESKTOP_FILE__);
+[Desktop Entry]
+Name=$name
+Exec=$execute
+Type=Application
+__DESKTOP_FILE__
+}
+
+package GSApp::Command::Edit;
+use App::Cmd::Setup -command;
+use Path::Tiny qw(path);
+sub execute {
+  my (undef, undef, $args) = @_;
+  my $name = $args->[0];
+
+  my $app = path("$GSAPP_PATH/$name.desktop");
+  die "\"$app\" doesn't exist" unless $app->exists;
+
+  my $editor = $ENV{EDITOR} // "vi";
+  system $editor, $app;
+}
+
+package GSApp::Command::Delete;
+use App::Cmd::Setup -command;
+use Path::Tiny qw(path);
+sub execute {
+  my (undef, undef, $args) = @_;
+  for my $name (@$args) {
+    my $app = path("$GSAPP_PATH/$name.desktop");
+    die "\"$app\" doesn't exist" unless $app->exists;
+    $app->remove;
+  }
+}
+
+package GSApp::Command::List;
+use App::Cmd::Setup -command;
+use File::Basename qw(basename);
+use Path::Tiny qw(path);
+sub execute {
+  my $root = path($GSAPP_PATH);
+  for my $path (grep { m/\.desktop$/ } $root->children) {
+    my $name = basename $path, ".desktop";
+    print "$name\n";
+  }
+}
+
+package main;
+GSApp->run;
