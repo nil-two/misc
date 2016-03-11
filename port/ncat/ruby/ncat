@@ -1,0 +1,18 @@
+#!/usr/bin/ruby
+
+name = File.basename $0
+if ARGV.length < 1 || ARGV[0] == "--help"
+  STDERR.puts "usage: #{name} N [FILE]..."
+end
+
+count = ARGV.shift.to_i
+src   = $<.to_a
+if count < 0
+  loop do
+    puts src
+  end
+else
+  count.times do
+    puts src
+  end
+end
