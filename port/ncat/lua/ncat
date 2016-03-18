@@ -1,0 +1,41 @@
+#!/usr/bin/lua
+
+function read_argf(names)
+  if #names == 0 then
+    return io.read("a"), nil
+  end
+  local buf = {}
+  for _, name in ipairs(names) do
+    local file, err = io.open(name)
+    if err ~= nil then
+      return nil, err
+    end
+    table.insert(buf, file:read("a"))
+    file:close()
+  end
+  return table.concat(buf, ""), nil
+end
+
+local name = arg[0]:gsub(".*/([^/]*)$", "%1")
+if #arg < 1 or arg[1] == "--help" then
+  io.stderr:write(("usage: %s N [FILE]...\n"):format(name))
+  os.exit(2)
+end
+
+local count = tonumber(arg[1])
+local argf = table.pack(table.unpack(arg, 2))
+local src, err = read_argf(argf)
+if err ~= nil then
+  io.stderr:write(("%s: %s\n"):format(name, err))
+  os.exit(2)
+end
+
+if count < 0 then
+  while true do
+    io.stdout:write(src)
+  end
+else
+  for i = 1, count do
+    io.stdout:write(src)
+  end
+end
