@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use autodie qw(:all);
+use Getopt::Long qw(:config posix_default no_ignore_case bundling);
+use File::Basename qw(basename);
+use File::Copy qw(copy);
+use File::Temp qw(tempdir);
+
+our $NAME    = basename $0;
+our $VERSION = "0.2.0";
+our $USAGE   = <<USAGE;
+Usage: $NAME [OPTION]... SRC
+Execute processing program quickly.
+
+Options:
+  -h, --help      display this help text and exit
+  -v, --version   output version information and exit
+USAGE
+
+Getopt::Long::GetOptions(
+  "help|h" => sub {
+    print STDERR $USAGE;
+    exit 0;
+  },
+  "version|v" => sub {
+    print STDERR "$VERSION\n";
+    exit 0;
+  },
+) or exit 2;
+
+if (@ARGV < 1) {
+  print STDERR "$NAME: no input file\n";
+  exit 2;
+}
+if (not -f $ARGV[0]) {
+  print STDERR "$NAME: $ARGV[0]: no such file\n";
+  exit 2;
+}
+
+my $src = $ARGV[0];
+my $workdir = tempdir(CLEANUP => 1);
+mkdir "$workdir/sketch";
+mkdir "$workdir/output";
+copy $src, "$workdir/sketch/sketch.pde";
+
+system "processing-java",
+  "--sketch=$workdir/sketch",
+  "--output=$workdir/output",
+  "--force",
+  "--run";
