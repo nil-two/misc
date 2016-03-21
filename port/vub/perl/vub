@@ -1,0 +1,92 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use utf8;
+use File::Basename qw(basename);
+use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat bundling);
+
+our $NAME    = basename $0;
+our $VERSION = "0.3.0";
+our $USAGE   = <<USAGE;
+Usage: $NAME [OPTION]... URI...
+Install Vim plugin to under the management of vim-unbundle.
+
+URI:
+  sunaku/vim-unbundle                    # short URI
+  https://github.com/sunaku/vim-unbundle # full URI
+
+Options:
+  -f, --filetype=TYPE       installing under the ftbundle/TYPE
+  -l, --list                change the behavior to list packages
+  -r, --remove              change the behavior to remove
+  -u, --update              change the behavior to update
+      --help                show this help message
+      --version             output version information
+USAGE
+
+sub to_source_URI {
+  my $uri = shift;
+  return "https://$uri"            if $uri =~ m{^(github.com|bitbucket.org)/.*/.*};
+  return "https://github.com/$uri" if $uri =~ m{.*/.*};
+  return $uri;
+}
+
+sub to_destination_path {
+  my ($filetype, $uri) = @_;
+  my $name = s{^.*/}{};
+  return "$ENV{HOME}/.vim/bundle/$name" if $filetype eq "";
+  return "$ENV{HOME}/.vim/ftbundle/$filetype/$name";
+}
+
+my $filetype = "";
+my $mode     = "install";
+GetOptions(
+  "filetype|f=s" => \$filetype,
+  "list|l"   => sub { $mode = "list" },
+  "remove|r" => sub { $mode = "remove" },
+  "update|u" => sub { $mode = "update" },
+  "help" => sub {
+    print STDERR $USAGE;
+    exit 0;
+  },
+  "version" => sub {
+    print STDERR "$VERSION\n";
+    exit 0;
+  },
+) or exit 2;
+
+if ($mode eq "list") {
+  my $root = $filetype eq ""
+    ? "$ENV{HOME}/.vim/bundle"
+    : "$ENV{HOME}/.vim/ftbundle/$filetype";
+  for my $package (map { basename $_ } glob "$root/*") {
+    print "$package\n";
+  }
+  exit 0;
+}
+
+if (@ARGV < 1) {
+  print STDERR $USAGE;
+  exit 2;
+}
+for my $uri (@ARGV) {
+  my $source_uri = to_source_URI $uri;
+  my $destination_path = to_destination_path $filetype, $uri;
+  if ($mode eq "install") {
+    if (not -d $destination_path) {
+      system "git", "clone", "--", $source_uri, $destination_path;
+    }
+  } elsif ($mode eq "remove") {
+    if (-d $destination_path) {
+      system "rm", "-rf", "--", $destination_path;
+    }
+  } elsif ($mode eq "update") {
+    if (-d $destination_path) {
+      chdir $destination_path;
+      system "git", "pull";
+    } else {
+      system "git", "clone", "--", $source_uri, $destination_path;
+    }
+  }
+}
+exit 0;
