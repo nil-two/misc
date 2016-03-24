@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+import sys
+import os.path
+import fileinput
+
+name = os.path.basename(sys.argv[0])
+if len(sys.argv) < 1 or sys.argv[1] == "--help":
+    print("usage: %s N [FILE]..." % name, file=sys.stdout)
+    sys.exit(2)
+
+n   = int(sys.argv[1])
+src = "".join([line for line in fileinput.input(files=sys.argv[2:])])
+if n < 0:
+    while True:
+        print(src, end='')
+else:
+    for _ in range(n):
+        print(src, end='')
