@@ -79,7 +79,6 @@ read_argf(int nfiles, char *files[], char **err)
 				fclose(fp);
 				return NULL;
 			}
-			printf("size: %d\n", src_size);
 
 			src_size += strlen(next_src);
 			if ((src = realloc(src, src_size)) == NULL) {
@@ -87,8 +86,8 @@ read_argf(int nfiles, char *files[], char **err)
 				*err = "failed to reallocate src";
 				return NULL;
 			}
-
 			strcat(src, next_src);
+
 			fclose(fp);
 		}
 	}
