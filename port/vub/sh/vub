@@ -26,28 +26,32 @@ version() {
 }
 
 to_source_uri() {
-  local uri=$1
-  case $uri in
-    github.com/*/*|bitbucket.org/*/*)
-      echo "https://$uri"
-      ;;
-    */*)
-      echo "https://github.com/$uri"
-      ;;
-    *)
-      echo "$uri"
-      ;;
-  esac
+  (
+    uri=$1
+    case $uri in
+      github.com/*/*|bitbucket.org/*/*)
+        echo "https://$uri"
+        ;;
+      */*)
+        echo "https://github.com/$uri"
+        ;;
+      *)
+        echo "$uri"
+        ;;
+    esac
+  )
 }
 
 to_destination_path() {
-  local filetype=$1
-  local uri=${2##*/}
-  if [ -z "$filetype" ]; then
-    echo "$HOME/.vim/bundle/$uri"
-  else
-    echo "$HOME/.vim/ftbundle/$filetype/$uri"
-  fi
+  (
+    filetype=$1
+    uri=${2##*/}
+    if [ -z "$filetype" ]; then
+      echo "$HOME/.vim/bundle/$uri"
+    else
+      echo "$HOME/.vim/ftbundle/$filetype/$uri"
+    fi
+  )
 }
 
 mode=install
