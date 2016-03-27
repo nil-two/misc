@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-version='0.1.0'
+version="0.1.0"
 
 usage() {
   cat <<__USAGE__ >&2
@@ -18,7 +18,7 @@ warn() {
 }
 
 while [ $# -gt 0 ]; do
-  case "$1" in
+  case $1 in
     --help)
       usage
       exit 0
@@ -48,8 +48,8 @@ while : ; do
     exit 0
   fi
 
-  current="$(pwd)"
-  parent="$(dirname "$current")"
+  current=$(pwd)
+  parent=$(dirname "$current")
   if [ "$current" = "$parent" ]; then
     warn "Makefile Not Found"
     exit 2

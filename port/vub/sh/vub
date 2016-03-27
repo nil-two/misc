@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-version='0.3.0'
+version="0.3.0"
 
 usage() {
   cat <<__USAGE__ >&2
@@ -22,12 +22,12 @@ __USAGE__
 }
 
 version() {
-  echo "$version" >&2
+  printf "%s\n" "$version" >&2
 }
 
 to_source_uri() {
-  local uri="$1"
-  case "$uri" in
+  local uri=$1
+  case $uri in
     github.com/*/*|bitbucket.org/*/*)
       echo "https://$uri"
       ;;
@@ -41,8 +41,8 @@ to_source_uri() {
 }
 
 to_destination_path() {
-  local filetype="$1"
-  local uri="${2##*/}"
+  local filetype=$1
+  local uri=${2##*/}
   if [ -z "$filetype" ]; then
     echo "$HOME/.vim/bundle/$uri"
   else
@@ -52,8 +52,8 @@ to_destination_path() {
 
 mode=install
 filetype=
-while [ "$#" -gt 0 ]; do
-  case "$1" in
+while [ $# -gt 0 ]; do
+  case $1 in
     --help)
       usage
       exit 0
@@ -63,24 +63,24 @@ while [ "$#" -gt 0 ]; do
       exit 0
       ;;
     -f|--filetype)
-      if [ "$#" -lt 2 ]; then
+      if [ $# -lt 2 ]; then
         echo "${0##*/}: option requires an argument -- '${1##*-}'" >&2
         exit 2
       fi
-      filetype="$2"
+      filetype=$2
       ;;
     -f*)
-      filetype="${1#-f}"
+      filetype=${1#-f}
       ;;
     --filetype=*)
-      filetype="${1#--filetype=}"
+      filetype=${1#--filetype=}
       ;;
     -l|--list)
       mode=list
       ;;
     -l*)
       mode=list
-      next="-${1#-l}"
+      next=-${1#-l}
       shift
       set -- "$next" "$@"
       continue
@@ -90,7 +90,7 @@ while [ "$#" -gt 0 ]; do
       ;;
     -r*)
       mode=remove
-      next="-${1#-r}"
+      next=-${1#-r}
       shift
       set -- "$next" "$@"
       continue
@@ -100,7 +100,7 @@ while [ "$#" -gt 0 ]; do
       ;;
     -u*)
       mode=update
-      next="-${1#-u}"
+      next=-${1#-u}
       shift
       set -- "$next" "$@"
       continue
@@ -124,23 +124,23 @@ case "$mode" in
   list)
     root=''
     if [ -z "$filetype" ]; then
-      root="$HOME/.vim/bundle"
+      root=$HOME/.vim/bundle
     else
-      root="$HOME/.vim/ftbundle/$filetype"
+      root=$HOME/.vim/ftbundle/$filetype
     fi
     ls -- "$root" 2> /dev/null
     exit 0
     ;;
 esac
 
-if [ "$#" -lt 1 ]; then
+if [ $# -lt 1 ]; then
   usage
   exit 2
 fi
 for uri in "$@"; do
-  source_uri="$(to_source_uri "$uri")"
-  destination_path="$(to_destination_path "$filetype" "$uri")"
-  case "$mode" in
+  source_uri=$(to_source_uri "$uri")
+  destination_path=$(to_destination_path "$filetype" "$uri")
+  case $mode in
     install)
       if [ ! -d "$destination_path" ]; then
         git clone -- "$source_uri" "$destination_path"
