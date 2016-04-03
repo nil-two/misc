@@ -1,0 +1,9 @@
+#!/usr/bin/env perl6
+sub USAGE() {
+  say "Usage: catn N [FILE]...";
+}
+sub MAIN (Int $count, *@files) {
+  my $src = @files.elems == 0 ?? $*IN.slurp-rest !! @files.map({ .IO.slurp }).join;
+  my $last = $count < 0 ?? Inf !! $count;
+  print $src for 1..$last;
+}
