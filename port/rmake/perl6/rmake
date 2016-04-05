@@ -1,0 +1,40 @@
+#!/usr/bin/env perl6
+my $version = "0.1.0";
+
+sub USAGE() {
+  note q:to/__USAGE__/.chomp;
+Usage: rmake [OPTION]... [MAKE-ARGS]...
+Find parent directory's Makefile recursively, and execute make.
+
+Options:
+      --help                display this help text and exit
+      --version             display version information and exit
+__USAGE__
+}
+
+sub VERSION() {
+  note $version;
+}
+
+sub MAIN(Bool :$help, Bool :$version, *@args) {
+  if $help {
+    USAGE;
+    exit 0;
+  }
+  if $version {
+    VERSION;
+    exit 0;
+  }
+
+  loop {
+    if "Makefile".IO.e {
+      my $result = run "make", @args;
+      exit $result.exitcode;
+    }
+    if $*CWD eq $*CWD.dirname {
+      note "rmake: Makefile not found";
+      exit 2;
+    }
+    chdir $*CWD.dirname;
+  }
+}
