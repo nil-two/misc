@@ -2,7 +2,7 @@
 my $version = "0.2.0";
 
 sub USAGE() {
-  print q:to/__USAGE__/;
+  note q:to/__USAGE__/.chomp;
 Usage:  [OPTION]... [FILE]...
 Reverse lines of FILE(s), or standard input.
 
@@ -14,7 +14,7 @@ __USAGE__
 }
 
 sub VERSION() {
-  say $version;
+  note $version;
 }
 
 sub MAIN (Str :d(:$delimiter) = "", Bool :$help, Bool :$version, *@files) {
