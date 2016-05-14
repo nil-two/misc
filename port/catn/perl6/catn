@@ -3,7 +3,7 @@ sub USAGE() {
   note "Usage: catn N [FILE]...";
 }
 sub MAIN (Int $count, *@files) {
-  my $src = @files.elems == 0 ?? $*IN.slurp-rest !! @files.map({ .IO.slurp }).join;
+  my $src = IO::ArgFiles.new(:args(@files)).slurp;
   my $last = $count < 0 ?? Inf !! $count;
   print $src for 1..$last;
 }

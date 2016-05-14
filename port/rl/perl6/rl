@@ -27,16 +27,8 @@ sub MAIN (Str :d(:$delimiter) = "", Bool :$help, Bool :$version, *@files) {
     exit(0);
   }
 
-  if @files.elems == 0 {
-    for $*IN.lines() -> $line {
+  my $argf = IO::ArgFiles.new(:args(@files), :chomp);
+  for $argf.lines -> $line {
       say $line.split($delimiter).reverse.join($delimiter);
-    }
-  } else {
-    for @files -> $file {
-      my $fh = open $file;
-      for $fh.lines() -> $line {
-        say $line.split($delimiter).reverse.join($delimiter);
-      }
-    }
   }
 }
