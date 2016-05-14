@@ -3,7 +3,7 @@ my $version = "0.2.0";
 
 sub USAGE() {
   note q:to/__USAGE__/.chomp;
-Usage:  [OPTION]... [FILE]...
+Usage: rl [OPTION]... [FILE]...
 Reverse lines of FILE(s), or standard input.
 
 Options:
