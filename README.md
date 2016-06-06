@@ -8,11 +8,11 @@ Contents
 
 ### aoj
 
-Programs to solve problems of AOJ.
+Programs to solve problems of [AOJ](http://judge.u-aizu.ac.jp/onlinejudge/).
 
 ### atcoder
 
-Programs to solve problems of AtCoder.
+Programs to solve problems of [AtCoder](http://atcoder.jp/).
 
 ### port
 
