@@ -8,11 +8,11 @@ Contents
 
 ### aoj
 
-Programs to solve the problems of AOJ.
+Programs to solve problems of AOJ.
 
 ### atcoder
 
-Programs to solve the problems of AtCoder.
+Programs to solve problems of AtCoder.
 
 ### port
 
