@@ -1,2 +1,4 @@
-_ = gets
-puts gets.split.map(&:to_i).reverse.join(" ")
+n    = gets.to_i
+nums = gets.split.map(&:to_i)
+
+puts nums.reverse.join(" ")

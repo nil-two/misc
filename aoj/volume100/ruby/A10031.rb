@@ -1,7 +1,7 @@
-_ = gets
-a = gets.split.map(&:to_i)
-_ = gets
-b = gets.split.map(&:to_i)
+n = gets.to_i
+s = gets.split.map(&:to_i)
+q = gets.to_i
+t = gets.split.map(&:to_i)
 
-c = (a & b)
-puts c.size
+c = (s & t).size
+puts c

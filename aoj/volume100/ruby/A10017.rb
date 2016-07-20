@@ -1,10 +1,10 @@
-$<.each do |l|
-  break if l.chomp == "0 0"
+$<.each do |line|
+  n, x = line.split.map(&:to_i)
+  break if n == 0 && x == 0
 
-  cnt = 0
-  n, x = l.split.map(&:to_i)
-  (1..n).to_a.combination(3).each{|c|
-    cnt += 1 if c.inject(:+) == x
-  }
-  puts cnt
+  n_ways = [*1..n]
+    .combination(3)
+    .select{|nums| nums.inject(:+) == x}
+    .length
+  puts n_ways
 end

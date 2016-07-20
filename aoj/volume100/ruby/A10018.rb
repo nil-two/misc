@@ -1,1 +1,2 @@
-puts gets.swapcase
+text = gets
+puts text.swapcase

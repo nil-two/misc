@@ -1,11 +1,5 @@
-src = gets.chomp.downcase
-cnt = 0
-$<.each {|l|
-  break if l.chomp == "END_OF_TEXT"
+w     = gets.chomp.downcase
+words = $<.read.split.take_while{|s| s != "END_OF_TEXT"}.map(&:downcase)
 
-  l.downcase.split.each{|w|
-    cnt += 1 if w == src
-  }
-}
-
-puts cnt
+n_matches = words.select{|word| word == w}.length
+puts n_matches

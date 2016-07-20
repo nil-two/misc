@@ -1,5 +1,7 @@
+include Math
+
 r = gets.to_f
 
-area          = r*r*Math::PI
-circumference = 2*r*Math::PI
+area          = PI*r*r
+circumference = 2*PI*r
 puts "#{area.round(6)} #{circumference.round(6)}"

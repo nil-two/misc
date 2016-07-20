@@ -1,20 +1,9 @@
-require "set"
+n           = gets.to_i
+exist_cards = $<.map(&:chomp)
 
-cards = Set.new
-%w[S H C D].each {|kind|
-  1.upto(13).each{|i|
-    cards << "#{kind} #{i}"
-  }
-}
+suits = %w[S H C D]
+ranks = [*1..13]
+all_cards     = suits.product(ranks).map{|suit, rank| "#{suit} #{rank}"}
+missing_cards = all_cards - exist_cards
 
-_ = gets
-$<.each {|l|
-  cards.delete(l.chomp)
-}
-
-%w[S H C D].each {|kind|
-  1.upto(13).each{|i|
-    card = "#{kind} #{i}"
-    puts card if cards.include?(card)
-  }
-}
+puts missing_cards

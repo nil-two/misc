@@ -1,3 +1,6 @@
 a, b = gets.split.map(&:to_i)
 
-puts "#{a / b} #{a % b} #{(a.to_f / b.to_f).round(6)}"
+d = a / b
+r = a % b
+f = a.to_f / b.to_f
+printf "#{d} #{r} #{f.round(6)}"

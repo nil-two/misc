@@ -1,11 +1,11 @@
-while cards = gets do
-  cards.chomp!
+while line = gets do
+  cards = line.chomp
   break if cards == "-"
 
   m = gets.to_i
-  m.times {
-    h = gets.to_i
-    cards = cards[h..-1] + cards[0..h-1]
-  }
+  m.times do
+    h     = gets.to_i
+    cards = cards.slice(h..-1) + cards.slice(0..h-1)
+  end
   puts cards
 end

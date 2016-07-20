@@ -1,10 +1,11 @@
-cnt = Hash.new(0)
-$<.each do |l|
-  l.chomp.downcase.split(//).each{|c|
-    cnt[c] += 1
-  }
+chars  = [*'a'..'z']
+counts = Hash.new(0)
+
+lowerd_text = $<.read.downcase
+lowerd_text.chars.each do |ch|
+  counts[ch] += 1
 end
 
-('a'..'z').each{|c|
-  puts "#{c} : #{cnt[c]}"
-}
+chars.each do |ch|
+  puts "#{ch} : #{counts[ch]}"
+end

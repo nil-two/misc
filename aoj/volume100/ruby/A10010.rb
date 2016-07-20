@@ -1,8 +1,8 @@
-$<.each do |l|
-  rawA, op, rawB = l.split
+$<.each do |line|
+  raw_a, op, raw_b = line.split
   break if op == "?"
 
-  a, b = rawA.to_i, rawB.to_i
+  a, b = raw_a.to_i, raw_b.to_i
   puts case op
   when "+"; a + b
   when "-"; a - b

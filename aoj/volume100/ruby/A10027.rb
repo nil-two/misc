@@ -1,17 +1,17 @@
-scoreA, scoreB = 0, 0
+a_score, b_score = 0, 0
 
-noGame = gets.to_i
-noGame.times {
-  a, b = gets.chomp.split
+n_games = gets.to_i
+n_games.times do
+  a_card, b_card = gets.chomp.split
   case
-  when a == b
-    scoreA += 1
-    scoreB += 1
-  when a > b
-    scoreA += 3
-  when a < b
-    scoreB += 3
+  when a_card == b_card
+    a_score += 1
+    b_score += 1
+  when a_card > b_card
+    a_score += 3
+  when a_card < b_card
+    b_score += 3
   end
-}
+end
 
-puts "#{scoreA} #{scoreB}"
+puts "#{a_score} #{b_score}"

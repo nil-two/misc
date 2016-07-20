@@ -1,3 +1,1 @@
-1000.times {
-  puts "Hello World"
-}
+print "Hello World\n" * 1000

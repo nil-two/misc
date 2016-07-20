@@ -1,4 +1,6 @@
-$<.each do |l|
-  break if l.chomp == "0 0"
-  puts l.split.map(&:to_i).sort.join(" ")
+$<.each do |line|
+  x, y = line.split.map(&:to_i)
+  break if x == 0 && y == 0
+
+  puts [x, y].sort.join(" ")
 end
