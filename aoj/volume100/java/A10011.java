@@ -3,26 +3,33 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-class Main {
-    private static String join(List<Integer> ls) {
-        StringBuilder sb = new StringBuilder();
-        for (Integer n: ls) {
-            if (sb.length() > 0)
-                sb.append(" ");
-            sb.append(n);
-        }
-        return sb.toString();
-    }
-
+class A10011 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        int noItems = scan.nextInt();
-        List<Integer> ls = new ArrayList<Integer>();
-        for (int i = 0; i < noItems; i++)
-            ls.add(scan.nextInt());
-        Collections.reverse(ls);
+        int n = scan.nextInt();
+        List<Integer> nums = new ArrayList<Integer>();
+        for (int i = 0; i < n; i++)
+            nums.add(scan.nextInt());
 
-        System.out.println(join(ls));
+        Collections.reverse(nums);
+
+        System.out.println(join(nums, " "));
+    }
+
+    private static <T> String join(List<T> list, String separator) {
+        StringBuilder sb = new StringBuilder();
+
+        boolean isFirstItem = true;
+        for (T item: list) {
+            if (isFirstItem) {
+                isFirstItem = false;
+            } else {
+                sb.append(separator);
+            }
+            sb.append(item);
+        }
+
+        return sb.toString();
     }
 }

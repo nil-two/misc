@@ -2,23 +2,27 @@ import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-class Main {
+class A10015 {
+    static final char[] suits = {'S', 'H', 'C', 'D'};
+    static final int[]  ranks = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+
     public static void main(String[] args) {
-        Set<String> cards = new LinkedHashSet<String>();
-
-        String[] kinds = {"S", "H", "C", "D"};
-        for (String kind: kinds)
-            for (int i = 1; i <= 13; i++)
-                cards.add(kind + " " + i);
-
         Scanner scan = new Scanner(System.in);
-        scan.nextInt();
-        while (scan.hasNext()) {
-            String card = scan.nextLine();
-            cards.remove(card);
-        }
 
-        for (String card: cards)
+        Set<String> cards = new LinkedHashSet<String>();
+        for (char suit : suits)
+            for (int rank : ranks)
+                cards.add(toCard(suit, rank));
+
+        scan.nextLine(); // to skip n
+        while (scan.hasNextLine())
+            cards.remove(scan.nextLine());
+
+        for (String card : cards)
             System.out.println(card);
+    }
+
+    public static String toCard(char suit, int rank) {
+        return suit + " " + rank;
     }
 }

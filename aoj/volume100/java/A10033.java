@@ -4,36 +4,44 @@ import java.util.Deque;
 import java.util.List;
 import java.util.Scanner;
 
-class Main {
+class A10033 {
     public static void main(String[] args) {
         List<Deque<String>> stacks = new ArrayList<Deque<String>>();
 
         Scanner scan = new Scanner(System.in);
-        int noStack = scan.nextInt();
-        for (int i = 0; i < noStack; i++)
-            stacks.add(new ArrayDeque<String>());
 
-        while (scan.hasNext()) {
-            String operate = scan.next();
-            if (operate.equals("quit")) {
+        int nStacks = scan.nextInt();
+        for (int i = 0; i < nStacks; i++) {
+            stacks.add(new ArrayDeque<String>());
+        }
+
+        while (true) {
+            String instruction = scan.next();
+            String block;
+            int src, dst;
+
+            switch (instruction) {
+            case "quit":
+                return;
+
+            case "push":
+                dst   = scan.nextInt() - 1;
+                block = scan.next();
+                stacks.get(dst).push(block);
                 break;
 
-            } else if (operate.equals("push")) {
-                int dst = scan.nextInt() - 1;
-                String block = scan.next(); 
-                stacks.get(dst).push(block);
-
-            } else if (operate.equals("pop")) {
-                int src = scan.nextInt() - 1;
-                String block = stacks.get(src).pop();
+            case "pop":
+                src   = scan.nextInt() - 1;
+                block = stacks.get(src).pop();
                 System.out.println(block);
+                break;
 
-            } else if (operate.equals("move")) {
-                int src = scan.nextInt() - 1;
-                int dst = scan.nextInt() - 1;
-                String block = stacks.get(src).pop();
+            case "move":
+                src   = scan.nextInt() - 1;
+                dst   = scan.nextInt() - 1;
+                block = stacks.get(src).pop();
                 stacks.get(dst).push(block);
-
+                break;
             }
         }
     }

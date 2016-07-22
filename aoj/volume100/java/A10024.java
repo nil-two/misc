@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Main {
+class A10024 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         double x1 = scan.nextDouble();
@@ -11,6 +11,6 @@ class Main {
         double h = Math.abs(y2 - y1);
         double w = Math.abs(x2 - x1);
         double distance = Math.sqrt(Math.pow(h, 2) + Math.pow(w, 2));
-        System.out.printf("%.6f", distance);
+        System.out.println(distance);
     }
 }

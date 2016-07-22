@@ -2,38 +2,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Main {
-    static double average(List<Integer> ls) {
-            double average = 0.0;
-            for (Integer n: ls)
-                average += n;
-            return average / ls.size();
-    }
-
-    static double variance(List<Integer> ls) {
-            double variance = 0.0;
-            double average = average(ls);
-            for (Integer n: ls)
-                variance += Math.pow(n - average, 2);
-            return variance /= ls.size();
-    }
-
-    static double standardDeviation(List<Integer> ls) {
-            return Math.sqrt(variance(ls));
-    }
-
+class A10026 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        while (scan.hasNext()) {
-            int noItem = scan.nextInt();
-            if (noItem == 0)
+
+        while (true) {
+            int n = scan.nextInt();
+            if (n == 0)
                 break;
 
-            List<Integer> ls = new ArrayList<Integer>();
-            for (int i = 0; i < noItem; i++)
-                ls.add(scan.nextInt());
+            List<Integer> scores = new ArrayList<Integer>();
+            for (int i = 0; i < n; i++)
+                scores.add(scan.nextInt());
 
-            System.out.printf("%.6f\n", standardDeviation(ls));
+            double average = 0;
+            for (int score : scores) {
+                average += score;
+            }
+            average /= scores.size();
+
+            double variance = 0.0;
+            for (int score : scores) {
+                variance += Math.pow(score - average, 2);
+            }
+            variance /= scores.size();
+
+            double standardDeviation = Math.sqrt(variance);
+            System.out.println(standardDeviation);
         }
     }
 }

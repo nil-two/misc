@@ -1,24 +1,27 @@
 import java.util.Scanner;
 
-class Main {
+class A10014 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        while (scan.hasNext()) {
+
+        while (true) {
             int h = scan.nextInt();
             int w = scan.nextInt();
             if (h == 0 && w == 0)
                 break;
 
+            StringBuilder sb = new StringBuilder();
             for (int y = 0; y < h; y++) {
                 for (int x = 0; x < w; x++) {
-                    if ((x+y) % 2 == 0)
-                        System.out.print("#");
-                    else
-                        System.out.print(".");
+                    if ((x+y)%2 == 0) {
+                        sb.append('#');
+                    } else {
+                        sb.append('.');
+                    }
                 }
-                System.out.println();
+                sb.append('\n');
             }
-            System.out.println();
+            System.out.println(sb);
         }
     }
 }

@@ -1,21 +1,24 @@
 import java.util.Scanner;
 
-class Main {
+class A10018 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        while (scan.hasNext()) {
-            String line = scan.nextLine();
+        String line = scan.nextLine();
 
-            for (char ch: line.toCharArray()) {
-                if (Character.isUpperCase(ch))
-                    ch = Character.toLowerCase(ch);
-                else if (Character.isLowerCase(ch))
-                    ch = Character.toUpperCase(ch);
+        System.out.println(toToggleCase(line));
+    }
 
-                System.out.print(ch);
+    public static String toToggleCase(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (char ch : s.toCharArray()) {
+            if (Character.isUpperCase(ch)) {
+                sb.append(Character.toLowerCase(ch));
+            } else if (Character.isLowerCase(ch)) {
+                sb.append(Character.toUpperCase(ch));
+            } else {
+                sb.append(ch);
             }
-
-            System.out.println();
         }
+        return sb.toString();
     }
 }

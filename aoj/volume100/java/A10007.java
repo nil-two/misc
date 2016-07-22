@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
-class Main {
+class A10007 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+
         while (true) {
             int a = scan.nextInt();
             int b = scan.nextInt();
             if (a == 0 && b == 0)
                 break;
 
-            if (a < b)
-                System.out.printf("%d %d\n", a, b);
-            else
-                System.out.printf("%d %d\n", b, a);
+            System.out.printf("%d %d\n", Math.min(a, b), Math.max(a, b));
         }
     }
 }

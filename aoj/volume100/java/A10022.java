@@ -1,20 +1,21 @@
 import java.util.Scanner;
 
-class Main {
+class A10022 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        String w = scan.nextLine().toLowerCase();
 
-        int noMatch = 0;
-        String src = scan.nextLine().toLowerCase();
+        int nMatches = 0;
         while (scan.hasNext()) {
-            String line = scan.nextLine();
-            if (line.equals("END_OF_TEXT"))
+            String word = scan.next();
+            if (word.equals("END_OF_TEXT"))
                 break;
-            for (String word: line.toLowerCase().split("\\s+"))
-                if (src.equals(word))
-                    noMatch++;
+
+            String lowerdWord = word.toLowerCase();
+            if (w.equals(lowerdWord))
+                nMatches++;
         }
 
-        System.out.println(noMatch);
+        System.out.println(nMatches);
     }
 }

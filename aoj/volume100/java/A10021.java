@@ -3,19 +3,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-class Main {
+class A10021 {
     public static void main(String[] args) {
-        List<String> ls = new ArrayList<String>();
+        List<String> words = new ArrayList<String>();
 
         Scanner scan = new Scanner(System.in);
-        scan.nextInt();
+        scan.nextLine(); // to skip n
         while (scan.hasNext()) {
-            String s = scan.nextLine();
-            if (!s.equals(""))
-                ls.add(s);
+            words.add(scan.nextLine());
         }
-        Collections.sort(ls);
 
-        System.out.println(ls.get(0));
+        Collections.sort(words);
+
+        String minimumWord = words.get(0);
+        System.out.println(minimumWord);
     }
 }

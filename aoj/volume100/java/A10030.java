@@ -2,24 +2,24 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-class Main {
+class A10030 {
     public static void main(String[] args) {
-        Set<Integer> s = new HashSet<Integer>();
-        Set<Integer> t = new HashSet<Integer>();
-
         Scanner scan = new Scanner(System.in);
-        int noItemsS = scan.nextInt();
-        int noItemsT = scan.nextInt();
-        for (int i = 0; i < noItemsS; i++)
+
+        Set<Integer> s = new HashSet<Integer>();
+        int n = scan.nextInt();
+        for (int i = 0; i < n; i++)
             s.add(scan.nextInt());
-        for (int i = 0; i < noItemsT; i++)
+
+        Set<Integer> t = new HashSet<Integer>();
+        int q = scan.nextInt();
+        for (int i = 0; i < q; i++)
             t.add(scan.nextInt());
 
-        int count = 0;
-        for (Integer n: t)
-            if (s.contains(n))
-                count++;
+        Set<Integer> u = new HashSet<Integer>(s);
+        u.retainAll(t);
 
-        System.out.println(count);
+        int c = u.size();
+        System.out.println(c);
     }
 }

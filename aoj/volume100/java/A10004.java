@@ -3,16 +3,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-class Main {
+class A10004 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-
-        List<Integer> ls = new ArrayList<Integer>();
+        List<Integer> nums = new ArrayList<Integer>();
         for (int i = 0; i < 3; i++)
-            ls.add(scan.nextInt());
-        Collections.sort(ls);
+            nums.add(scan.nextInt());
+
+        Collections.sort(nums);
 
         System.out.printf("%d %d %d\n",
-                ls.get(0), ls.get(1), ls.get(2));
+                nums.get(0), nums.get(1), nums.get(2));
     }
 }

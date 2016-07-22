@@ -1,18 +1,18 @@
 import java.util.Scanner;
 
-class Main {
+class A10023 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        while (scan.hasNext()) {
+
+        while (true) {
             String cards = scan.next();
             if (cards.equals("-"))
                 break;
 
-            int noShuffle = scan.nextInt();
-            for (int i = 0; i < noShuffle; i++) {
-                int noCards = scan.nextInt();
-                cards = cards.substring(noCards, cards.length())
-                    + cards.substring(0, noCards);
+            int nShuffles = scan.nextInt();
+            for (int i = 0; i < nShuffles; i++) {
+                int h = scan.nextInt();
+                cards = cards.substring(h, cards.length()) + cards.substring(0, h);
             }
 
             System.out.println(cards);

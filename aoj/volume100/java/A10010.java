@@ -1,20 +1,28 @@
 import java.util.Scanner;
 
-class Main {
+class A10010 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        while (scan.hasNext()) {
+
+        while (true) {
             int a     = scan.nextInt();
             String op = scan.next();
             int b     = scan.nextInt();
+            if (op.equals("?"))
+                break;
 
-            int n = 0;
-            if (op.equals("?")) break;
-            else if (op.equals("+")) n = a + b;
-            else if (op.equals("-")) n = a - b;
-            else if (op.equals("*")) n = a * b;
-            else if (op.equals("/")) n = a / b;
-            System.out.println(n);
+            int result = calculate(op, a, b);
+            System.out.println(result);
+        }
+    }
+
+    public static int calculate(String op, int a, int b) {
+        switch (op) {
+        case "+": return a + b;
+        case "-": return a - b;
+        case "*": return a * b;
+        case "/": return a / b;
+        default: return 0;
         }
     }
 }

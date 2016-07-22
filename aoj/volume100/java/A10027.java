@@ -1,18 +1,18 @@
 import java.util.Scanner;
 
-class Main {
+class A10027 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        int scoreA=0;
-        int scoreB=0;
+        int scoreA = 0;
+        int scoreB = 0;
 
-        int noGame = scan.nextInt();
-        for (int i = 0; i < noGame; i++) {
-            String a = scan.next();
-            String b = scan.next();
+        int nGames = scan.nextInt();
+        for (int i = 0; i < nGames; i++) {
+            String cardA = scan.next();
+            String cardB = scan.next();
 
-            int result = a.compareTo(b);
+            int result = cardA.compareTo(cardB);
             if (result == 0) {
                 scoreA += 1;
                 scoreB += 1;
