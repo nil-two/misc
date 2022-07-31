@@ -1,7 +1,7 @@
 rl
 ==
 
-Port [rl](https://github.com/kusabashira/rl) to perl.
+Port [rl](https://github.com/nil2nekoni/rl) to perl.
 
 Installation
 ------------
